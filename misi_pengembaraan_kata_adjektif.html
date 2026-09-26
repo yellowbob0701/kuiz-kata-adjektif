@@ -1,0 +1,1608 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🗺️ Misi Pengembaraan Kata Adjektif - Tahun 5</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Fredoka & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        h1, h2, h3, h4, .font-heading {
+            font-family: 'Fredoka', cursive, sans-serif;
+        }
+        
+        /* Custom Animations */
+        @keyframes bounce-subtle {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
+        }
+        @keyframes pulse-glow {
+            0%, 100% { filter: drop-shadow(0 0 8px rgba(234, 179, 8, 0.6)); }
+            50% { filter: drop-shadow(0 0 20px rgba(234, 179, 8, 0.9)); }
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        
+        .animate-bounce-subtle { animation: bounce-subtle 2.5s infinite ease-in-out; }
+        .animate-float { animation: float 4s infinite ease-in-out; }
+        .animate-glow { animation: pulse-glow 2s infinite ease-in-out; }
+        
+        /* Custom Styling for Option Buttons */
+        .btn-option-a {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            box-shadow: 0 6px 0 #991b1b, 0 10px 15px -3px rgba(239, 68, 68, 0.4);
+        }
+        .btn-option-a:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 9px 0 #991b1b, 0 15px 20px -3px rgba(239, 68, 68, 0.5);
+        }
+        .btn-option-a:active:not(:disabled) {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #991b1b;
+        }
+
+        .btn-option-b {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            box-shadow: 0 6px 0 #1e40af, 0 10px 15px -3px rgba(59, 130, 246, 0.4);
+        }
+        .btn-option-b:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 9px 0 #1e40af, 0 15px 20px -3px rgba(59, 130, 246, 0.5);
+        }
+        .btn-option-b:active:not(:disabled) {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #1e40af;
+        }
+
+        .btn-gold {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            box-shadow: 0 6px 0 #b45309, 0 10px 15px -3px rgba(245, 158, 11, 0.4);
+        }
+        .btn-gold:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 9px 0 #b45309, 0 15px 20px -3px rgba(245, 158, 11, 0.5);
+        }
+        .btn-gold:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #b45309;
+        }
+
+        /* Glassmorphism effects */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(12px);
+            border: 2px solid rgba(255, 255, 255, 0.6);
+        }
+        .glass-dark {
+            background: rgba(15, 23, 42, 0.82);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-800 min-h-screen flex flex-col justify-between overflow-x-hidden relative">
+
+    <!-- Sound Effect Toggle Floating Button -->
+    <button id="soundToggle" onclick="toggleSound()" class="fixed top-4 right-4 z-50 bg-white/90 hover:bg-white text-slate-800 p-3 rounded-full shadow-lg border-2 border-amber-400 flex items-center justify-center transition-all hover:scale-110">
+        <i id="soundIcon" class="fa-solid fa-volume-high text-xl text-amber-600"></i>
+    </button>
+
+    <!-- Confetti Canvas overlay -->
+    <canvas id="confettiCanvas" class="fixed inset-0 pointer-events-none z-50"></canvas>
+
+    <!-- MAIN GAME CONTAINER -->
+    <div id="gameContainer" class="w-full max-w-5xl mx-auto my-0 sm:my-4 flex-1 flex flex-col justify-center min-h-[95vh] relative px-2 sm:px-4">
+
+        <!-- ========================================== -->
+        <!-- SCREEN 1: WELCOME / ADVENTURE CAMP SCREEN -->
+        <!-- ========================================== -->
+        <div id="welcomeScreen" class="flex flex-col items-center justify-center py-6 space-y-6 w-full my-auto">
+            <!-- Header Title Banner -->
+            <div class="text-center relative z-10 w-full max-w-3xl">
+                <div class="inline-block bg-amber-500 text-slate-900 font-extrabold px-6 py-1.5 rounded-full text-sm sm:text-base tracking-wide uppercase shadow-md mb-2 border-2 border-amber-300 animate-pulse">
+                    ✨ PERMAINAN INTERAKTIF BAHASA MELAYU TAHUN 5 ✨
+                </div>
+                <h1 class="text-3xl sm:text-5xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-orange-400 to-yellow-200 drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)] tracking-wide">
+                    🗺️ MISI PENGEMBARAAN KATA ADJEKTIF
+                </h1>
+                <p class="text-amber-100 font-medium text-base sm:text-lg mt-2 drop-shadow">
+                    Sertai Aiman dalam pengembaraan mencari <span class="text-yellow-300 font-bold">10 Permata Kata Adjektif</span> di seluruh pelosok alam fantasi!
+                </p>
+            </div>
+
+            <!-- Central Hero Illustration Banner (Adventure Camp) -->
+            <div class="w-full bg-gradient-to-b from-indigo-900/90 to-slate-900/90 border-4 border-amber-500/80 rounded-3xl p-4 sm:p-6 shadow-2xl relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6">
+                <!-- Background Decorative Pattern -->
+                <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#f59e0b_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none"></div>
+
+                <!-- Aiman Camp Scene Graphic (SVG) -->
+                <div class="w-full md:w-1/2 h-56 sm:h-64 rounded-2xl overflow-hidden border-2 border-amber-400/40 relative shadow-inner flex items-center justify-center bg-slate-950">
+                    <svg viewBox="0 0 500 350" class="w-full h-full object-cover">
+                        <defs>
+                            <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="#1e1b4b"/>
+                                <stop offset="60%" stop-color="#312e81"/>
+                                <stop offset="100%" stop-color="#4338ca"/>
+                            </linearGradient>
+                            <linearGradient id="mountGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="#312e81"/>
+                                <stop offset="100%" stop-color="#1e1b4b"/>
+                            </linearGradient>
+                            <linearGradient id="tentGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#f97316"/>
+                                <stop offset="50%" stop-color="#ea580c"/>
+                                <stop offset="100%" stop-color="#c2410c"/>
+                            </linearGradient>
+                        </defs>
+                        <!-- Sky Background -->
+                        <rect width="500" height="350" fill="url(#skyGrad)" />
+                        <!-- Moon & Stars -->
+                        <circle cx="420" cy="60" r="25" fill="#fef08a" opacity="0.9"/>
+                        <circle cx="410" cy="55" r="22" fill="#1e1b4b"/>
+                        <circle cx="80" cy="50" r="2" fill="#fff" opacity="0.8"/>
+                        <circle cx="180" cy="80" r="1.5" fill="#fff" opacity="0.9"/>
+                        <circle cx="280" cy="40" r="2.5" fill="#fff" opacity="0.7"/>
+
+                        <!-- Background Mountains -->
+                        <path d="M-20 280 L80 160 L180 280 Z" fill="url(#mountGrad)" />
+                        <path d="M120 280 L250 120 L380 280 Z" fill="url(#mountGrad)" opacity="0.8"/>
+                        <path d="M280 280 L400 180 L520 280 Z" fill="url(#mountGrad)"/>
+
+                        <!-- Trees Foreground Midground -->
+                        <path d="M30 280 L45 220 L60 280 Z" fill="#065f46"/>
+                        <path d="M440 280 L460 210 L480 280 Z" fill="#065f46"/>
+
+                        <!-- Campfire Ground -->
+                        <path d="M -10 260 Q 250 310 510 260 L 510 360 L -10 360 Z" fill="#047857"/>
+
+                        <!-- Tent -->
+                        <polygon points="100,280 160,190 220,280" fill="url(#tentGrad)"/>
+                        <polygon points="160,190 220,280 240,280 180,190" fill="#9a3412"/>
+                        <polygon points="140,280 160,220 180,280" fill="#431407"/>
+
+                        <!-- Campfire -->
+                        <polygon points="320,285 310,295 330,295" fill="#78350f"/>
+                        <polygon points="315,295 325,280 335,295" fill="#78350f"/>
+                        <circle cx="322" cy="280" r="12" fill="#f59e0b" opacity="0.8"/>
+                        <circle cx="322" cy="278" r="7" fill="#ef4444" opacity="0.9"/>
+
+                        <!-- Map & Compass on crate -->
+                        <rect x="250" y="260" width="35" height="25" rx="3" fill="#78350f"/>
+                        <rect x="255" y="255" width="25" height="10" fill="#fde047" rx="1"/>
+
+                        <!-- AIMAN - MAIN CHARACTER IN CAMP -->
+                        <!-- Aiman Explorer SVG -->
+                        <g transform="translate(360, 160)">
+                            <!-- Backpack behind -->
+                            <rect x="-32" y="45" width="20" height="35" rx="6" fill="#854d0e"/>
+                            <rect x="-32" y="40" width="20" height="8" rx="2" fill="#a16207"/>
+                            
+                            <!-- Body / Vest -->
+                            <rect x="-18" y="42" width="36" height="45" rx="8" fill="#15803d"/> <!-- shirt -->
+                            <path d="M-18 42 L-6 87 L-18 87 Z" fill="#166534"/>
+                            <!-- Explorer Vest -->
+                            <path d="M-18 42 L-6 42 L-4 82 L-18 82 Z" fill="#d97706"/>
+                            <path d="M18 42 L6 42 L4 82 L18 82 Z" fill="#d97706"/>
+                            <rect x="-14" y="52" width="8" height="10" rx="2" fill="#b45309"/>
+                            <rect x="6" y="52" width="8" height="10" rx="2" fill="#b45309"/>
+
+                            <!-- Pants & Boots -->
+                            <rect x="-14" y="85" width="12" height="25" fill="#451a03"/>
+                            <rect x="2" y="85" width="12" height="25" fill="#451a03"/>
+                            <!-- Boots -->
+                            <path d="M-16 105 L-2 105 L-2 115 L-18 115 Z" fill="#27272a"/>
+                            <path d="M0 105 L14 105 L16 115 L0 115 Z" fill="#27272a"/>
+
+                            <!-- Head & Face -->
+                            <circle cx="0" cy="22" r="22" fill="#fbcfe8"/> <!-- Skin base -->
+                            <!-- Hair -->
+                            <path d="M-22 18 C-20 -5 20 -5 22 18 C15 5 -15 5 -22 18 Z" fill="#1c1917"/>
+                            <path d="M-15 10 Q0 -2 15 10" fill="#1c1917"/>
+
+                            <!-- Big Expressive Eyes -->
+                            <ellipse cx="-7" cy="20" rx="4.5" ry="6" fill="#fff"/>
+                            <ellipse cx="7" cy="20" rx="4.5" ry="6" fill="#fff"/>
+                            <circle cx="-6" cy="20" r="2.5" fill="#0284c7"/>
+                            <circle cx="8" cy="20" r="2.5" fill="#0284c7"/>
+                            <circle cx="-7" cy="18" r="1" fill="#fff"/>
+                            <circle cx="7" cy="18" r="1" fill="#fff"/>
+
+                            <!-- Cheerful Smile -->
+                            <path d="M-6 29 Q0 36 6 29" fill="none" stroke="#9f1239" stroke-width="2.5" stroke-linecap="round"/>
+                            <!-- Rosy Cheeks -->
+                            <circle cx="-13" cy="26" r="3" fill="#f43f5e" opacity="0.4"/>
+                            <circle cx="13" cy="26" r="3" fill="#f43f5e" opacity="0.4"/>
+
+                            <!-- Explorer Hat -->
+                            <path d="M-30 8 C-10 -2 10 -2 30 8 L35 12 L-35 12 Z" fill="#b45309"/> <!-- Brim -->
+                            <path d="M-20 8 C-18 -15 18 -15 20 8 Z" fill="#d97706"/> <!-- Dome -->
+                            <rect x="-20" y="3" width="40" height="5" fill="#78350f"/> <!-- Band -->
+                            <circle cx="0" cy="5" r="3" fill="#f59e0b"/> <!-- Badge -->
+
+                            <!-- Arms & Hand holding Map/Compass -->
+                            <path d="M-18 45 L-28 65 L-20 70" stroke="#d97706" stroke-width="7" stroke-linecap="round"/>
+                            <circle cx="-20" cy="70" r="5" fill="#fbcfe8"/>
+                            <circle cx="-20" cy="70" r="6" fill="#fef08a" stroke="#b45309" stroke-width="1.5"/> <!-- Compass -->
+
+                            <path d="M18 45 L28 60 L20 75" stroke="#d97706" stroke-width="7" stroke-linecap="round"/>
+                            <circle cx="20" cy="75" r="5" fill="#fbcfe8"/>
+                        </g>
+
+                        <!-- Glowing Gem Jewels floating -->
+                        <polygon points="50,120 60,105 70,120 60,135" fill="#ec4899" class="animate-glow"/>
+                        <polygon points="440,110 450,95 460,110 450,125" fill="#3b82f6" class="animate-glow"/>
+                        <polygon points="230,70 240,55 250,70 240,85" fill="#eab308" class="animate-glow"/>
+                    </svg>
+                </div>
+
+                <!-- Welcome Text & Action Buttons -->
+                <div class="w-full md:w-1/2 flex flex-col space-y-4">
+                    <div class="bg-amber-500/10 border border-amber-500/30 p-4 rounded-2xl text-amber-100">
+                        <div class="flex items-center space-x-2 text-amber-400 font-bold mb-1">
+                            <i class="fa-solid fa-compass text-xl"></i>
+                            <span class="text-lg">Pesanan daripada Aiman:</span>
+                        </div>
+                        <p class="text-sm leading-relaxed text-slate-200">
+                            "Hai rakan pengembara! Saya Aiman. Mari bantu saya merentas 10 lokasi pengembaraan untuk mencari Permata Kata Adjektif yang hilang!"
+                        </p>
+                    </div>
+
+                    <div class="flex flex-col gap-3">
+                        <button onclick="showMapScreen()" class="btn-gold w-full py-4 px-6 rounded-2xl font-black text-xl text-slate-900 tracking-wide flex items-center justify-center space-x-3 transition-all transform active:scale-95">
+                            <i class="fa-solid fa-play text-2xl"></i>
+                            <span>MULA PENGEMBARAAN</span>
+                        </button>
+
+                        <button onclick="showLearningMap()" class="w-full py-3 px-6 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-base shadow-md border-b-4 border-indigo-800 flex items-center justify-center space-x-2 transition-all">
+                            <i class="fa-solid fa-book-open text-amber-300"></i>
+                            <span>📖 PETA ILMU: APA ITU KATA ADJEKTIF?</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- SCREEN 2: PETA ILMU (LEARNING / GRAMMAR)   -->
+        <!-- ========================================== -->
+        <div id="learningScreen" class="hidden flex-col items-center justify-center py-4 w-full my-auto">
+            <div class="w-full bg-amber-50 border-4 border-amber-700 rounded-3xl p-5 sm:p-8 shadow-2xl relative text-slate-800 max-h-[85vh] overflow-y-auto">
+                
+                <!-- Close / Back Button -->
+                <button onclick="showWelcomeScreen()" class="absolute top-4 right-4 bg-amber-200 hover:bg-amber-300 text-amber-900 font-bold p-2.5 rounded-full border-2 border-amber-700 transition">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+
+                <!-- Header -->
+                <div class="flex items-center space-x-3 border-b-2 border-amber-300 pb-3 mb-4">
+                    <span class="text-3xl">📖</span>
+                    <div>
+                        <h2 class="text-2xl sm:text-3xl font-black text-amber-900">PETA ILMU: KATA ADJEKTIF</h2>
+                        <p class="text-xs sm:text-sm text-amber-800 font-semibold">Rujukan Rasmi Bahasa Melayu Tahun 5 (Piawaian DBP / PRPM)</p>
+                    </div>
+                </div>
+
+                <!-- Explanation Box -->
+                <div class="bg-amber-100/80 border-l-4 border-amber-600 p-4 rounded-r-xl mb-6">
+                    <h3 class="font-bold text-amber-950 text-base sm:text-lg mb-1">Maksud Kata Adjektif:</h3>
+                    <p class="text-sm sm:text-base text-slate-800 leading-relaxed">
+                        <strong>Kata Adjektif</strong> (kata sifat) ialah perkataan yang menerangkan <em>sifat</em> atau <em>keadaan</em> bagi sesuatu kata nama atau frasa nama.
+                    </p>
+                </div>
+
+                <!-- Grid of Adjective Types -->
+                <h3 class="font-bold text-lg text-amber-900 mb-3 flex items-center space-x-2">
+                    <i class="fa-solid fa-layer-group text-amber-600"></i>
+                    <span>Jenis-jenis Kata Adjektif (Contoh Tahun 5):</span>
+                </h3>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 mb-6">
+                    <!-- Sifatan -->
+                    <div class="bg-emerald-100 border border-emerald-400 p-3 rounded-xl">
+                        <div class="flex items-center space-x-2 font-bold text-emerald-900 text-sm mb-1">
+                            <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
+                            <span>Sifatan / Keadaan</span>
+                        </div>
+                        <p class="text-xs text-emerald-800">baik, cerdik, berani, lemah, rajin</p>
+                    </div>
+                    <!-- Warna -->
+                    <div class="bg-blue-100 border border-blue-400 p-3 rounded-xl">
+                        <div class="flex items-center space-x-2 font-bold text-blue-900 text-sm mb-1">
+                            <span class="w-3 h-3 rounded-full bg-blue-500"></span>
+                            <span>Warna</span>
+                        </div>
+                        <p class="text-xs text-blue-800">merah, biru, kuning, hijau, putih</p>
+                    </div>
+                    <!-- Ukuran -->
+                    <div class="bg-amber-100 border border-amber-400 p-3 rounded-xl">
+                        <div class="flex items-center space-x-2 font-bold text-amber-900 text-sm mb-1">
+                            <span class="w-3 h-3 rounded-full bg-amber-500"></span>
+                            <span>Ukuran</span>
+                        </div>
+                        <p class="text-xs text-amber-800">tinggi, rendah, panjang, tebal, kecil</p>
+                    </div>
+                    <!-- Bentuk -->
+                    <div class="bg-purple-100 border border-purple-400 p-3 rounded-xl">
+                        <div class="flex items-center space-x-2 font-bold text-purple-900 text-sm mb-1">
+                            <span class="w-3 h-3 rounded-full bg-purple-500"></span>
+                            <span>Bentuk</span>
+                        </div>
+                        <p class="text-xs text-purple-800">bulat, leper, bujur, kemik, lurus</p>
+                    </div>
+                    <!-- Pancaindera -->
+                    <div class="bg-rose-100 border border-rose-400 p-3 rounded-xl">
+                        <div class="flex items-center space-x-2 font-bold text-rose-900 text-sm mb-1">
+                            <span class="w-3 h-3 rounded-full bg-rose-500"></span>
+                            <span>Pancaindera (Rasa/Bau/Sentuh)</span>
+                        </div>
+                        <p class="text-xs text-rose-800">manis, harum, licin, halus, bising</p>
+                    </div>
+                    <!-- Perasaan -->
+                    <div class="bg-pink-100 border border-pink-400 p-3 rounded-xl">
+                        <div class="flex items-center space-x-2 font-bold text-pink-900 text-sm mb-1">
+                            <span class="w-3 h-3 rounded-full bg-pink-500"></span>
+                            <span>Perasaan</span>
+                        </div>
+                        <p class="text-xs text-pink-800">gembira, sedih, rindu, takut, marah</p>
+                    </div>
+                </div>
+
+                <!-- Examples from Adventure Quest -->
+                <div class="bg-amber-200/60 p-4 rounded-xl border border-amber-400 mb-6">
+                    <h4 class="font-bold text-amber-900 text-sm mb-2">Contoh Penggunaan Dalam Misi:</h4>
+                    <ul class="text-xs sm:text-sm text-slate-800 space-y-1.5 list-disc list-inside">
+                        <li>🍋 Air limau itu sangat <strong>manis</strong>. <em>(Kata Adjektif Pancaindera Rasa)</em></li>
+                        <li>🌴 Pokok kelapa di pantai itu sangat <strong>tinggi</strong>. <em>(Kata Adjektif Ukuran)</em></li>
+                        <li>🌹 Bunga ros berbau sangat <strong>harum</strong>. <em>(Kata Adjektif Pancaindera Bau)</em></li>
+                        <li>🎁 Adik berasa <strong>gembira</strong> mendapat hadiah. <em>(Kata Adjektif Perasaan)</em></li>
+                    </ul>
+                </div>
+
+                <button onclick="showMapScreen()" class="btn-gold w-full py-3 rounded-xl font-bold text-slate-900 text-lg shadow-md">
+                    🚀 FAHAM, SAYA Sedia MULA PENGEMBARAAN!
+                </button>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- SCREEN 3: WORLD MAP / JOURNEY MAP          -->
+        <!-- ========================================== -->
+        <div id="mapScreen" class="hidden flex-col items-center justify-center py-4 w-full my-auto">
+            <div class="w-full bg-slate-900 border-4 border-amber-500 rounded-3xl p-4 sm:p-6 shadow-2xl relative flex flex-col items-center">
+                
+                <!-- Header Stats Bar -->
+                <div class="w-full flex justify-between items-center bg-slate-800/90 border border-slate-700 px-4 py-2.5 rounded-2xl mb-4">
+                    <div class="flex items-center space-x-2">
+                        <i class="fa-solid fa-map-location-dot text-amber-400 text-xl"></i>
+                        <span class="font-bold text-amber-200 text-sm sm:text-base">PETA PERJALANAN AIMAN</span>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <span class="flex items-center space-x-1 bg-amber-500/20 px-3 py-1 rounded-full border border-amber-500/40 text-amber-300 font-bold text-xs sm:text-sm">
+                            💎 <span id="mapGemsCount">0</span>/10
+                        </span>
+                        <button onclick="showWelcomeScreen()" class="text-slate-400 hover:text-white transition">
+                            <i class="fa-solid fa-house text-lg"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Visual Interactive Map Container -->
+                <div class="w-full h-80 sm:h-96 bg-slate-950 rounded-2xl border-2 border-amber-500/30 relative overflow-hidden p-2">
+                    <svg id="worldMapSvg" viewBox="0 0 800 500" class="w-full h-full object-contain">
+                        <!-- SVG map path will be rendered dynamically by JS -->
+                    </svg>
+                </div>
+
+                <!-- Dynamic Location Prompt -->
+                <div class="mt-4 w-full flex flex-col sm:flex-row items-center justify-between gap-3 bg-indigo-950 border border-indigo-700/60 p-3 rounded-2xl">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-full bg-amber-500 flex items-center justify-center text-slate-900 font-black text-lg">
+                            <i class="fa-solid fa-location-dot"></i>
+                        </div>
+                        <div>
+                            <div id="currentLocTitle" class="text-amber-300 font-bold text-sm sm:text-base">Lokasi 1: Kem Perkhemahan</div>
+                            <div class="text-xs text-slate-300">Selesaikan soalan untuk membuka lokasi berikutnya!</div>
+                        </div>
+                    </div>
+                    <button onclick="startCurrentQuestion()" class="btn-gold px-6 py-2.5 rounded-xl font-extrabold text-slate-900 text-sm whitespace-nowrap">
+                        TERUSKAN MISI <i class="fa-solid fa-arrow-right ml-1"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- SCREEN 4: QUIZ / QUESTION ADVENTURE STAGE  -->
+        <!-- ========================================== -->
+        <div id="quizScreen" class="hidden flex-col items-center justify-center py-2 sm:py-4 w-full my-auto">
+            
+            <!-- Top HUD / Status Bar -->
+            <div class="w-full bg-slate-900/90 border-2 border-amber-500/60 rounded-2xl px-3 sm:px-5 py-2.5 mb-3 flex items-center justify-between shadow-lg text-white">
+                <!-- Location Indicator -->
+                <div class="flex items-center space-x-2">
+                    <span id="quizLocationBadge" class="bg-amber-500 text-slate-950 text-xs font-black px-2.5 py-1 rounded-lg">
+                        LOKASI 1/10
+                    </span>
+                    <span id="quizLocationName" class="font-bold text-amber-200 text-xs sm:text-sm hidden sm:inline">
+                        Kem Perkhemahan
+                    </span>
+                </div>
+
+                <!-- Stats: Hearts (Lives), Gems, Score -->
+                <div class="flex items-center space-x-3 sm:space-x-5 text-xs sm:text-sm">
+                    <!-- Lives -->
+                    <div class="flex items-center space-x-1" title="Nyawa">
+                        <span id="livesContainer" class="flex space-x-0.5 text-rose-500 text-base">
+                            <i class="fa-solid fa-heart"></i>
+                            <i class="fa-solid fa-heart"></i>
+                            <i class="fa-solid fa-heart"></i>
+                        </span>
+                    </div>
+                    <!-- Gems -->
+                    <div class="flex items-center space-x-1 bg-slate-800 px-2.5 py-1 rounded-lg border border-amber-500/30" title="Permata">
+                        <span>💎</span>
+                        <span id="gemsCount" class="font-bold text-amber-300">0</span>
+                    </div>
+                    <!-- Score -->
+                    <div class="flex items-center space-x-1 bg-slate-800 px-2.5 py-1 rounded-lg border border-indigo-500/30" title="Skor">
+                        <span class="text-amber-400 font-bold">SKOR:</span>
+                        <span id="scoreCount" class="font-black text-white">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MAIN ADVENTURE SCENE CANVAS / SVG DISPLAY (3-LAYER DEPTH VISUAL) -->
+            <div class="w-full bg-slate-950 rounded-3xl border-4 border-amber-500/70 overflow-hidden shadow-2xl relative mb-3 flex flex-col">
+                <!-- Scene Area -->
+                <div id="sceneContainer" class="w-full h-60 sm:h-80 md:h-96 relative bg-slate-900 overflow-hidden">
+                    <!-- Dynamic Scene SVG inserted here via JavaScript -->
+                </div>
+
+                <!-- AIMAN TALK / FEEDBACK BUBBLE PANEL -->
+                <div class="bg-slate-900 border-t-2 border-amber-500/40 p-3 sm:p-4 flex items-center space-x-3 sm:space-x-4">
+                    <!-- Aiman Avatar Icon -->
+                    <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-amber-500 border-2 border-amber-300 flex-shrink-0 flex items-center justify-center overflow-hidden shadow-md">
+                        <svg viewBox="0 0 100 100" class="w-full h-full">
+                            <circle cx="50" cy="50" r="45" fill="#fbcfe8"/>
+                            <path d="M20 40 C30 10 70 10 80 40 Z" fill="#1c1917"/>
+                            <circle cx="38" cy="48" r="5" fill="#0284c7"/>
+                            <circle cx="62" cy="48" r="5" fill="#0284c7"/>
+                            <path d="M40 65 Q50 75 60 65" fill="none" stroke="#9f1239" stroke-width="4" stroke-linecap="round"/>
+                            <path d="M15 30 L85 30 L80 18 L20 18 Z" fill="#b45309"/>
+                            <path d="M30 18 C32 -2 68 -2 70 18 Z" fill="#d97706"/>
+                        </svg>
+                    </div>
+
+                    <!-- Speech Bubble Text -->
+                    <div class="flex-1 bg-indigo-950/90 border border-indigo-500/50 rounded-2xl p-2.5 sm:p-3 relative">
+                        <div id="aimanDialogue" class="text-xs sm:text-sm font-semibold text-amber-100 leading-snug">
+                            "Selesaikan soalan untuk membantu saya mengumpul Permata Kata Adjektif!"
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- QUESTION CARD & OPTION BUTTONS -->
+            <div class="w-full bg-slate-900/90 border-2 border-amber-500/50 rounded-3xl p-4 sm:p-6 shadow-xl flex flex-col space-y-4">
+                <!-- Question Text Box -->
+                <div class="bg-slate-950/80 border border-indigo-500/30 p-3.5 sm:p-4 rounded-2xl text-center">
+                    <span class="text-xs font-bold uppercase tracking-wider text-amber-400 block mb-1">SOALAN KATA ADJEKTIF:</span>
+                    <h3 id="questionText" class="text-base sm:text-xl font-extrabold text-white leading-relaxed">
+                        "Air limau itu sangat ______ selepas dimasukkan banyak gula."
+                    </h3>
+                </div>
+
+                <!-- Answer Choice Buttons (ALWAYS A: RED, B: BLUE) -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 pt-1">
+                    <!-- Option A (ALWAYS RED) -->
+                    <button id="btnOptA" onclick="checkAnswer('A')" class="btn-option-a text-white p-4 rounded-2xl font-black text-lg sm:text-xl flex items-center justify-between transition-all transform active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed">
+                        <div class="flex items-center space-x-3">
+                            <span class="w-8 h-8 rounded-xl bg-white/20 flex items-center justify-center text-white font-extrabold text-base border border-white/30">A</span>
+                            <span id="textOptA">Manis</span>
+                        </div>
+                        <i class="fa-solid fa-circle-chevron-right text-white/80"></i>
+                    </button>
+
+                    <!-- Option B (ALWAYS BLUE) -->
+                    <button id="btnOptB" onclick="checkAnswer('B')" class="btn-option-b text-white p-4 rounded-2xl font-black text-lg sm:text-xl flex items-center justify-between transition-all transform active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed">
+                        <div class="flex items-center space-x-3">
+                            <span class="w-8 h-8 rounded-xl bg-white/20 flex items-center justify-center text-white font-extrabold text-base border border-white/30">B</span>
+                            <span id="textOptB">Masin</span>
+                        </div>
+                        <i class="fa-solid fa-circle-chevron-right text-white/80"></i>
+                    </button>
+                </div>
+
+                <!-- Next Question Button (Hidden until answer chosen) -->
+                <button id="btnNext" onclick="nextQuestion()" class="hidden btn-gold w-full py-3.5 rounded-2xl font-black text-slate-900 text-lg shadow-lg items-center justify-center space-x-2 animate-bounce-subtle">
+                    <span>SELESAI! TERUSKAN KE LOKASI SETERUSNYA</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- SCREEN 5: END GAME SUMMARY & VICTORY       -->
+        <!-- ========================================== -->
+        <div id="summaryScreen" class="hidden flex-col items-center justify-center py-6 w-full my-auto">
+            <div class="w-full max-w-3xl bg-slate-900 border-4 border-amber-500 rounded-3xl p-6 sm:p-8 shadow-2xl relative text-center flex flex-col items-center">
+                
+                <!-- Victory Banner Header -->
+                <div class="inline-block bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 text-slate-950 font-black text-xl sm:text-3xl px-8 py-3 rounded-full shadow-lg border-2 border-amber-200 mb-4 tracking-wide uppercase animate-glow">
+                    🏆 TAHNIAH, PENGEMBARA HEBAT! 🏆
+                </div>
+
+                <p id="summarySubtext" class="text-amber-100 text-base sm:text-lg mb-6 max-w-xl font-medium">
+                    "Kamu telah berjaya membantu Aiman menyelesaikan Misi Pengembaraan Kata Adjektif sehingga ke Puncak Tanah Tinggi!"
+                </p>
+
+                <!-- Mountain Peak Victory Graphic Scene -->
+                <div class="w-full h-48 sm:h-56 bg-slate-950 rounded-2xl border-2 border-amber-400/40 mb-6 overflow-hidden relative">
+                    <svg viewBox="0 0 500 250" class="w-full h-full object-cover">
+                        <defs>
+                            <linearGradient id="victorySky" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="#fdba74"/>
+                                <stop offset="50%" stop-color="#f43f5e"/>
+                                <stop offset="100%" stop-color="#4c1d95"/>
+                            </linearGradient>
+                        </defs>
+                        <rect width="500" height="250" fill="url(#victorySky)"/>
+                        <!-- Sun -->
+                        <circle cx="250" cy="120" r="45" fill="#fef08a" opacity="0.9"/>
+                        <!-- Mountain Peaks -->
+                        <polygon points="0,250 150,110 300,250" fill="#311b92"/>
+                        <polygon points="200,250 350,80 500,250" fill="#1e1b4b"/>
+                        <polygon points="100,250 250,60 400,250" fill="#431407" opacity="0.7"/>
+
+                        <!-- Aiman Cheering at Peak -->
+                        <g transform="translate(235, 30)">
+                            <circle cx="15" cy="15" r="10" fill="#fbcfe8"/>
+                            <path d="M5 25 L25 25 L25 45 L5 45 Z" fill="#15803d"/>
+                            <path d="M-2 12 L32 12 L30 5 L0 5 Z" fill="#b45309"/>
+                            <!-- Raised hands -->
+                            <line x1="5" y1="28" x2="-5" y2="15" stroke="#d97706" stroke-width="4" stroke-linecap="round"/>
+                            <line x1="25" y1="28" x2="35" y2="15" stroke="#d97706" stroke-width="4" stroke-linecap="round"/>
+                        </g>
+
+                        <!-- Glowing Gem Trophy -->
+                        <polygon points="250,110 260,95 270,110 260,125" fill="#f59e0b" class="animate-glow"/>
+                    </svg>
+                </div>
+
+                <!-- Stats Summary Cards Grid -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 w-full mb-6">
+                    <div class="bg-slate-800/90 border border-amber-500/40 p-3 rounded-2xl">
+                        <div class="text-xs text-amber-300 font-bold uppercase">Skor Akhir</div>
+                        <div id="finalScore" class="text-2xl sm:text-3xl font-black text-amber-400 mt-1">0</div>
+                    </div>
+                    <div class="bg-slate-800/90 border border-emerald-500/40 p-3 rounded-2xl">
+                        <div class="text-xs text-emerald-300 font-bold uppercase">Betul</div>
+                        <div id="finalCorrect" class="text-2xl sm:text-3xl font-black text-emerald-400 mt-1">0/10</div>
+                    </div>
+                    <div class="bg-slate-800/90 border border-cyan-500/40 p-3 rounded-2xl">
+                        <div class="text-xs text-cyan-300 font-bold uppercase">Permata</div>
+                        <div id="finalGems" class="text-2xl sm:text-3xl font-black text-cyan-400 mt-1">0💎</div>
+                    </div>
+                    <div class="bg-slate-800/90 border border-purple-500/40 p-3 rounded-2xl">
+                        <div class="text-xs text-purple-300 font-bold uppercase">Lencana</div>
+                        <div id="finalBadge" class="text-xs sm:text-sm font-black text-purple-300 mt-2 truncate">Jaguh Adjektif</div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex flex-col sm:flex-row gap-3 w-full">
+                    <button onclick="restartGame()" class="btn-gold flex-1 py-3.5 rounded-2xl font-black text-slate-900 text-base shadow-lg flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-rotate-right"></i>
+                        <span>MAIN SEMULA</span>
+                    </button>
+                    <button onclick="showReviewScreen()" class="flex-1 py-3.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl font-bold text-base border-b-4 border-indigo-800 shadow-lg flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-list-check"></i>
+                        <span>ULANG KAJI JAWAPAN</span>
+                    </button>
+                    <button onclick="showMapScreen()" class="flex-1 py-3.5 bg-slate-700 hover:bg-slate-600 text-white rounded-2xl font-bold text-base border-b-4 border-slate-900 shadow-lg flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-map"></i>
+                        <span>LIHAT PETA</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- SCREEN 6: REVIEW ANSWERS SCREEN            -->
+        <!-- ========================================== -->
+        <div id="reviewScreen" class="hidden flex-col items-center justify-center py-4 w-full my-auto">
+            <div class="w-full bg-slate-900 border-4 border-amber-500 rounded-3xl p-4 sm:p-6 shadow-2xl relative max-h-[85vh] flex flex-col">
+                
+                <div class="flex items-center justify-between border-b border-slate-700 pb-3 mb-4">
+                    <h2 class="text-xl sm:text-2xl font-black text-amber-300 flex items-center space-x-2">
+                        <i class="fa-solid fa-book-bookmark"></i>
+                        <span>ULANG KAJI 10 SOALAN MISI</span>
+                    </h2>
+                    <button onclick="showSummaryScreen()" class="bg-slate-800 hover:bg-slate-700 text-white p-2 rounded-xl text-sm font-bold border border-slate-600">
+                        <i class="fa-solid fa-xmark"></i> Tutup
+                    </button>
+                </div>
+
+                <div id="reviewList" class="flex-1 overflow-y-auto space-y-3 pr-2">
+                    <!-- Dynamic review cards generated by JS -->
+                </div>
+
+                <button onclick="showSummaryScreen()" class="btn-gold w-full mt-4 py-3 rounded-xl font-bold text-slate-900">
+                    KEMBALI KE PAPARAN KEPUTUSAN
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Audio Engine using Web Audio API (No external sound files required)
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        let soundEnabled = true;
+
+        function playSound(type) {
+            if (!soundEnabled) return;
+            try {
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                if (type === 'click') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(400, audioCtx.currentTime);
+                    gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.08);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 0.08);
+                } else if (type === 'correct') {
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(523.25, audioCtx.currentTime); // C5
+                    osc.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.1); // E5
+                    osc.frequency.setValueAtTime(783.99, audioCtx.currentTime + 0.2); // G5
+                    gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.35);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 0.35);
+                } else if (type === 'wrong') {
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(180, audioCtx.currentTime);
+                    osc.frequency.setValueAtTime(130, audioCtx.currentTime + 0.15);
+                    gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 0.3);
+                } else if (type === 'fanfare') {
+                    const notes = [261.63, 329.63, 392.00, 523.25];
+                    notes.forEach((freq, idx) => {
+                        const o = audioCtx.createOscillator();
+                        const g = audioCtx.createGain();
+                        o.connect(g);
+                        g.connect(audioCtx.destination);
+                        o.type = 'triangle';
+                        o.frequency.setValueAtTime(freq, audioCtx.currentTime + (idx * 0.12));
+                        g.gain.setValueAtTime(0.15, audioCtx.currentTime + (idx * 0.12));
+                        g.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + (idx * 0.12) + 0.3);
+                        o.start(audioCtx.currentTime + (idx * 0.12));
+                        o.stop(audioCtx.currentTime + (idx * 0.12) + 0.3);
+                    });
+                }
+            } catch (e) {
+                console.log("Audio play error:", e);
+            }
+        }
+
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            const icon = document.getElementById('soundIcon');
+            if (soundEnabled) {
+                icon.className = 'fa-solid fa-volume-high text-xl text-amber-600';
+            } else {
+                icon.className = 'fa-solid fa-volume-xmark text-xl text-slate-400';
+            }
+        }
+
+        // 10 Detailed Questions matching the prompt exact specifications
+        const questionsData = [
+            {
+                id: 1,
+                location: "Kem Perkhemahan",
+                question: "Air limau itu sangat ______ selepas dimasukkan banyak gula.",
+                optA: "Manis",
+                optB: "Masin",
+                correctOpt: "A",
+                adjectiveType: "Pancaindera Rasa",
+                aimanIntro: "Wah, cantiknya tapak perkhemahan ini! Jom rasa air limau segar ini.",
+                aimanCorrect: "Syabas! Gula menjadikan air limau terasa manis! Permata pertama milik kita! 💎",
+                aimanWrong: "Awas! Masin ialah rasa garam. Jawapan yang tepat ialah 'manis'!",
+                sceneType: "campground"
+            },
+            {
+                id: 2,
+                location: "Rumah Hadiah",
+                question: "Adik berasa ______ apabila mendapat hadiah daripada ibu.",
+                optA: "Gembira",
+                optB: "Sedih",
+                correctOpt: "A",
+                adjectiveType: "Perasaan",
+                aimanIntro: "Lihat kotak hadiah besar itu! Apakah perasaan adik?",
+                aimanCorrect: "Tepat sekali! Menerima hadiah sudah tentu membuatkan adik berasa gembira! ⭐",
+                aimanWrong: "Kurang tepat. Sedih berlaku jika ada dukacita. Jawapan betul ialah 'gembira'!",
+                sceneType: "giftHouse"
+            },
+            {
+                id: 3,
+                location: "Pantai Tropika",
+                question: "Pokok kelapa yang berada di tepi pantai itu sangat ______.",
+                optA: "Rendah",
+                optB: "Tinggi",
+                correctOpt: "B",
+                adjectiveType: "Ukuran",
+                aimanIntro: "Tengok pokok kelapa di tepi pantai ini! Batangnya memanjang ke atas langit.",
+                aimanCorrect: "Hebat! Batang pokok kelapa itu memanjang ke atas, jadi ia sangat tinggi! 🌴",
+                aimanWrong: "Cuba perhatikan saiznya dengan teliti. Pokok kelapa itu memanjang ke atas, jadi ia 'tinggi'!",
+                sceneType: "beach"
+            },
+            {
+                id: 4,
+                location: "Pasar Tekstil",
+                question: "Kain sutera itu terasa sangat ______ apabila disentuh.",
+                optA: "Halus",
+                optB: "Kasar",
+                correctOpt: "A",
+                adjectiveType: "Pancaindera Sentuh",
+                aimanIntro: "Mari kita rasa tekstur gulungan kain sutera di pasar ini.",
+                aimanCorrect: "Bijak! Kain sutera berkualiti tinggi terasa sangat halus apabila disentuh. 🧵",
+                aimanWrong: "Kasar ialah permukaan seperti jalan berturap. Kain sutera terasa 'halus'!",
+                sceneType: "textileMarket"
+            },
+            {
+                id: 5,
+                location: "Jalan Selepas Hujan",
+                question: "Jalan raya menjadi ______ selepas hujan turun dengan lebat.",
+                optA: "Kesat",
+                optB: "Licin",
+                correctOpt: "B",
+                adjectiveType: "Keadaan",
+                aimanIntro: "Hujan baru berhenti. Ada lopak air dan pantulan cahaya pada permukaan jalan.",
+                aimanCorrect: "Tepat! Air hujan membuatkan permukaan jalan bertukar menjadi licin! 🌧️",
+                aimanWrong: "Hati-hati! Air hujan mengurangkan cengkaman, menjadikan jalan raya 'licin'!",
+                sceneType: "rainyRoad"
+            },
+            {
+                id: 6,
+                location: "Pintu Pagar Sekolah",
+                question: "Murid itu berlari dengan ______ untuk mengejar bas sekolah.",
+                optA: "Pantas",
+                optB: "Perlahan",
+                correctOpt: "A",
+                adjectiveType: "Cara",
+                aimanIntro: "Bas sekolah hendak bertolak! Murid itu sedang mengejar bas.",
+                aimanCorrect: "Cemerlang! Supaya tidak ketinggalan bas, dia mesti berlari dengan pantas! 🚌",
+                aimanWrong: "Jika berlari perlahan, pasti terlepas bas! Jawapan betul ialah 'pantas'.",
+                sceneType: "schoolBus"
+            },
+            {
+                id: 7,
+                location: "Taman Bunga Ros",
+                question: "Bunga ros yang mekar di taman ini berbau sangat ______.",
+                optA: "Harum",
+                optB: "Tengik",
+                correctOpt: "A",
+                adjectiveType: "Pancaindera Bau",
+                aimanIntro: "Harumnya bau di taman bunga ini! Banyak bunga ros pelbagai warna.",
+                aimanCorrect: "Luar biasa! Bunga ros dikenali kerana baunya yang amat harum! 🌹",
+                aimanWrong: "Tengik ialah bau minyak lama. Bau bunga ros ialah 'harum'!",
+                sceneType: "roseGarden"
+            },
+            {
+                id: 8,
+                location: "Taman Larian",
+                question: "Selepas berlari selama satu jam, badan abang berasa ______.",
+                optA: "Segar",
+                optB: "Penat",
+                correctOpt: "B",
+                adjectiveType: "Keadaan / Perasaan",
+                aimanIntro: "Abang baru selesai larian satu jam. Dia sedang berehat dan berpeluh.",
+                aimanCorrect: "Tepat sekali! Larian yang lama menggunakan tenaga, jadi badan berasa penat! 🏃",
+                aimanWrong: "Berlari sejam meletihkan badan. Jawapan yang betul ialah 'penat'!",
+                sceneType: "runningPark"
+            },
+            {
+                id: 9,
+                location: "Gudang Pengembara",
+                question: "Kotak itu terlalu ______ sehingga Ali tidak mampu mengangkatnya seorang diri.",
+                optA: "Ringan",
+                optB: "Berat",
+                correctOpt: "B",
+                adjectiveType: "Ukuran / Keadaan",
+                aimanIntro: "Peti kayu dan kotak besar ini memerlukan tenaga yang banyak untuk diangkat.",
+                aimanCorrect: "Bijak! Kotak besar yang sukar diangkat oleh seorang budak bermaksud ia berat! 📦",
+                aimanWrong: "Jika ringan, Ali boleh mengangkatnya dengan mudah. Kotak itu 'berat'!",
+                sceneType: "warehouse"
+            },
+            {
+                id: 10,
+                location: "Puncak Tanah Tinggi",
+                question: "Pemandangan di puncak tanah tinggi itu sungguh ______ pada waktu pagi.",
+                optA: "Indah",
+                optB: "Suram",
+                correctOpt: "A",
+                adjectiveType: "Sifatan / Keadaan",
+                aimanIntro: "Destinasi terakhir! Kita berada di puncak bukit menyaksikan matahari terbit!",
+                aimanCorrect: "Sempurna! Pemandangan matahari terbit di puncak gunung sungguh indah! Kita tamatkan misi! 🏔️💎",
+                aimanWrong: "Pemandangan keemasan di puncak bukit amat cantik dan 'indah'!",
+                sceneType: "mountainPeak"
+            }
+        ];
+
+        let currentState = {
+            currentLocIndex: 0,
+            score: 0,
+            gems: 0,
+            lives: 3,
+            streak: 0,
+            answersHistory: []
+        };
+
+        function showWelcomeScreen() {
+            playSound('click');
+            hideAllScreens();
+            document.getElementById('welcomeScreen').classList.remove('hidden');
+            document.getElementById('welcomeScreen').classList.add('flex');
+        }
+
+        function showLearningMap() {
+            playSound('click');
+            hideAllScreens();
+            document.getElementById('learningScreen').classList.remove('hidden');
+            document.getElementById('learningScreen').classList.add('flex');
+        }
+
+        function showMapScreen() {
+            playSound('click');
+            hideAllScreens();
+            renderWorldMap();
+            document.getElementById('mapScreen').classList.remove('hidden');
+            document.getElementById('mapScreen').classList.add('flex');
+        }
+
+        function showQuizScreen() {
+            hideAllScreens();
+            document.getElementById('quizScreen').classList.remove('hidden');
+            document.getElementById('quizScreen').classList.add('flex');
+            loadCurrentQuestion();
+        }
+
+        function showSummaryScreen() {
+            hideAllScreens();
+            document.getElementById('summaryScreen').classList.remove('hidden');
+            document.getElementById('summaryScreen').classList.add('flex');
+            renderSummaryData();
+        }
+
+        function showReviewScreen() {
+            playSound('click');
+            hideAllScreens();
+            renderReviewData();
+            document.getElementById('reviewScreen').classList.remove('hidden');
+            document.getElementById('reviewScreen').classList.add('flex');
+        }
+
+        function hideAllScreens() {
+            ['welcomeScreen', 'learningScreen', 'mapScreen', 'quizScreen', 'summaryScreen', 'reviewScreen'].forEach(id => {
+                const el = document.getElementById(id);
+                el.classList.add('hidden');
+                el.classList.remove('flex');
+            });
+        }
+
+        function restartGame() {
+            playSound('click');
+            currentState = {
+                currentLocIndex: 0,
+                score: 0,
+                gems: 0,
+                lives: 3,
+                streak: 0,
+                answersHistory: []
+            };
+            showMapScreen();
+        }
+
+        function startCurrentQuestion() {
+            playSound('click');
+            showQuizScreen();
+        }
+
+        function renderWorldMap() {
+            document.getElementById('mapGemsCount').innerText = currentState.gems;
+            const currentQ = questionsData[currentState.currentLocIndex];
+            document.getElementById('currentLocTitle').innerText = `Lokasi ${currentState.currentLocIndex + 1}: ${currentQ.location}`;
+
+            const svgMap = document.getElementById('worldMapSvg');
+            
+            // Map node coordinates
+            const points = [
+                {x: 80, y: 400, label: "Kem"},
+                {x: 180, y: 350, label: "Hadiah"},
+                {x: 280, y: 390, label: "Pantai"},
+                {x: 380, y: 320, label: "Pasar"},
+                {x: 480, y: 360, label: "Jalan"},
+                {x: 560, y: 280, label: "Sekolah"},
+                {x: 640, y: 220, label: "Taman"},
+                {x: 540, y: 160, label: "Larian"},
+                {x: 380, y: 140, label: "Gudang"},
+                {x: 220, y: 80, label: "Puncak"}
+            ];
+
+            let pathD = `M ${points[0].x} ${points[0].y}`;
+            for (let i = 1; i < points.length; i++) {
+                pathD += ` L ${points[i].x} ${points[i].y}`;
+            }
+
+            let nodesHtml = '';
+            points.forEach((pt, idx) => {
+                let statusColor = "#64748b"; // locked
+                let strokeColor = "#334155";
+                let isCurrent = (idx === currentState.currentLocIndex);
+                let isDone = (idx < currentState.currentLocIndex);
+
+                if (isDone) {
+                    statusColor = "#10b981"; // green done
+                    strokeColor = "#059669";
+                } else if (isCurrent) {
+                    statusColor = "#f59e0b"; // yellow active
+                    strokeColor = "#fef08a";
+                }
+
+                nodesHtml += `
+                    <g transform="translate(${pt.x}, ${pt.y})">
+                        ${isCurrent ? `<circle r="22" fill="none" stroke="#f59e0b" stroke-width="3" opacity="0.8" class="animate-ping"/>` : ''}
+                        <circle r="16" fill="${statusColor}" stroke="${strokeColor}" stroke-width="3" />
+                        <text y="5" text-anchor="middle" fill="#ffffff" font-weight="900" font-size="12">${idx + 1}</text>
+                        <text y="32" text-anchor="middle" fill="#cbd5e1" font-weight="700" font-size="11">${pt.label}</text>
+                    </g>
+                `;
+            });
+
+            svgMap.innerHTML = `
+                <defs>
+                    <linearGradient id="mapBgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#0f172a"/>
+                        <stop offset="100%" stop-color="#1e1b4b"/>
+                    </linearGradient>
+                </defs>
+                <rect width="800" height="500" fill="url(#mapBgGrad)" rx="15"/>
+                <!-- Path line -->
+                <path d="${pathD}" fill="none" stroke="#38bdf8" stroke-width="6" stroke-dasharray="10 6" opacity="0.6"/>
+                ${nodesHtml}
+            `;
+        }
+
+        function loadCurrentQuestion() {
+            const q = questionsData[currentState.currentLocIndex];
+            
+            // Update HUD
+            document.getElementById('quizLocationBadge').innerText = `LOKASI ${q.id}/10`;
+            document.getElementById('quizLocationName').innerText = q.location;
+            document.getElementById('gemsCount').innerText = currentState.gems;
+            document.getElementById('scoreCount').innerText = currentState.score;
+            renderLives();
+
+            // Set question text & options
+            document.getElementById('questionText').innerText = `"${q.question}"`;
+            document.getElementById('textOptA').innerText = q.optA;
+            document.getElementById('textOptB').innerText = q.optB;
+
+            // Reset buttons state
+            const btnA = document.getElementById('btnOptA');
+            const btnB = document.getElementById('btnOptB');
+            btnA.disabled = false;
+            btnB.disabled = false;
+            btnA.className = "btn-option-a text-white p-4 rounded-2xl font-black text-lg sm:text-xl flex items-center justify-between transition-all transform active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed";
+            btnB.className = "btn-option-b text-white p-4 rounded-2xl font-black text-lg sm:text-xl flex items-center justify-between transition-all transform active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed";
+
+            document.getElementById('btnNext').classList.add('hidden');
+            document.getElementById('btnNext').classList.remove('flex');
+
+            // Set Aiman dialogue
+            document.getElementById('aimanDialogue').innerText = `"${q.aimanIntro}"`;
+
+            // Render rich dynamic visual scene
+            renderSceneSVG(q.sceneType);
+        }
+
+        function renderLives() {
+            const container = document.getElementById('livesContainer');
+            let html = '';
+            for (let i = 0; i < 3; i++) {
+                if (i < currentState.lives) {
+                    html += `<i class="fa-solid fa-heart text-rose-500"></i>`;
+                } else {
+                    html += `<i class="fa-solid fa-heart text-slate-600"></i>`;
+                }
+            }
+            container.innerHTML = html;
+        }
+
+        function renderSceneSVG(sceneType) {
+            const container = document.getElementById('sceneContainer');
+            let svgContent = '';
+
+            // Common Aiman character SVG snippet for reusable insert in scenes
+            const aimanInScene = `
+                <g transform="translate(220, 160) scale(0.85)">
+                    <!-- Shadow -->
+                    <ellipse cx="0" cy="115" rx="25" ry="6" fill="#000" opacity="0.3"/>
+                    <!-- Backpack -->
+                    <rect x="-30" y="45" width="18" height="32" rx="5" fill="#854d0e"/>
+                    <!-- Body -->
+                    <rect x="-18" y="42" width="36" height="45" rx="8" fill="#15803d"/>
+                    <path d="M-18 42 L-6 42 L-4 82 L-18 82 Z" fill="#d97706"/>
+                    <path d="M18 42 L6 42 L4 82 L18 82 Z" fill="#d97706"/>
+                    <!-- Legs -->
+                    <rect x="-14" y="85" width="12" height="25" fill="#451a03"/>
+                    <rect x="2" y="85" width="12" height="25" fill="#451a03"/>
+                    <path d="M-16 105 L-2 105 L-2 115 L-18 115 Z" fill="#27272a"/>
+                    <path d="M0 105 L14 105 L16 115 L0 115 Z" fill="#27272a"/>
+                    <!-- Head -->
+                    <circle cx="0" cy="22" r="22" fill="#fbcfe8"/>
+                    <path d="M-22 18 C-20 -5 20 -5 22 18 C15 5 -15 5 -22 18 Z" fill="#1c1917"/>
+                    <!-- Face -->
+                    <ellipse cx="-7" cy="20" rx="4.5" ry="6" fill="#fff"/>
+                    <ellipse cx="7" cy="20" rx="4.5" ry="6" fill="#fff"/>
+                    <circle cx="-6" cy="20" r="2.5" fill="#0284c7"/>
+                    <circle cx="8" cy="20" r="2.5" fill="#0284c7"/>
+                    <path d="M-6 29 Q0 36 6 29" fill="none" stroke="#9f1239" stroke-width="2.5" stroke-linecap="round"/>
+                    <!-- Explorer Hat -->
+                    <path d="M-30 8 C-10 -2 10 -2 30 8 L35 12 L-35 12 Z" fill="#b45309"/>
+                    <path d="M-20 8 C-18 -15 18 -15 20 8 Z" fill="#d97706"/>
+                    <rect x="-20" y="3" width="40" height="5" fill="#78350f"/>
+                </g>
+            `;
+
+            switch (sceneType) {
+                case 'campground': // Q1: Camping Site & Lemonade
+                    svgContent = `
+                    <svg viewBox="0 0 600 320" class="w-full h-full object-cover">
+                        <!-- BACKGROUND LAYER -->
+                        <linearGradient id="cSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#38bdf8"/><stop offset="1" stop-color="#bae6fd"/></linearGradient>
+                        <rect width="600" height="320" fill="url(#cSky)"/>
+                        <circle cx="500" cy="60" r="30" fill="#fef08a" opacity="0.9"/>
+                        <!-- Mountains -->
+                        <polygon points="-50,220 100,100 250,220" fill="#047857" opacity="0.6"/>
+                        <polygon points="150,220 320,80 480,220" fill="#065f46"/>
+
+                        <!-- MIDGROUND LAYER -->
+                        <path d="M0 200 Q 300 240 600 200 L 600 320 L 0 320 Z" fill="#15803d"/>
+                        <!-- Tent -->
+                        <polygon points="80,220 140,140 200,220" fill="#f97316"/>
+                        <polygon points="140,140 200,220 220,220 160,140" fill="#c2410c"/>
+                        <!-- Wooden Table with Lemonade Pitcher -->
+                        <rect x="360" y="190" width="100" height="12" fill="#78350f" rx="2"/>
+                        <rect x="380" y="202" width="10" height="40" fill="#451a03"/>
+                        <rect x="430" y="202" width="10" height="40" fill="#451a03"/>
+                        <!-- Jug of Lemonade -->
+                        <rect x="380" y="150" width="25" height="40" rx="4" fill="#fef08a" opacity="0.8" stroke="#eab308" stroke-width="2"/>
+                        <path d="M405 160 Q 420 170 405 180" fill="none" stroke="#eab308" stroke-width="3"/>
+                        <circle cx="390" cy="145" r="6" fill="#facc15"/> <!-- lemon slice -->
+                        <rect x="415" y="165" width="12" height="25" rx="2" fill="#fef08a" stroke="#ca8a04"/> <!-- glass -->
+
+                        <!-- AIMAN -->
+                        ${aimanInScene}
+
+                        <!-- FOREGROUND LAYER -->
+                        <!-- Leaves & Flora in camera foreground -->
+                        <path d="M-10 320 Q 40 220 80 320 Z" fill="#047857"/>
+                        <path d="M520 320 Q 560 210 610 320 Z" fill="#047857"/>
+                    </svg>`;
+                    break;
+
+                case 'giftHouse': // Q2: Receiving Gift at Home
+                    svgContent = `
+                    <svg viewBox="0 0 600 320" class="w-full h-full object-cover">
+                        <!-- BACKGROUND LAYER (Room Interior) -->
+                        <rect width="600" height="320" fill="#fef3c7"/>
+                        <!-- Window with garden view -->
+                        <rect x="50" y="40" width="140" height="120" fill="#38bdf8" rx="8" stroke="#78350f" stroke-width="6"/>
+                        <line x1="120" y1="40" x2="120" y2="160" stroke="#78350f" stroke-width="4"/>
+                        <line x1="50" y1="100" x2="190" y2="100" stroke="#78350f" stroke-width="4"/>
+                        <circle cx="100" cy="70" r="15" fill="#fef08a"/>
+
+                        <!-- MIDGROUND LAYER -->
+                        <rect x="0" y="200" width="600" height="120" fill="#b45309"/> <!-- Wooden floor -->
+                        <!-- Carpet -->
+                        <ellipse cx="380" cy="240" rx="140" ry="40" fill="#f43f5e"/>
+
+                        <!-- Big Gift Box with Ribbons -->
+                        <rect x="340" y="160" width="80" height="80" rx="6" fill="#ec4899"/>
+                        <rect x="370" y="160" width="20" height="80" fill="#fde047"/>
+                        <rect x="340" y="190" width="80" height="20" fill="#fde047"/>
+                        <!-- Ribbon Bow -->
+                        <circle cx="380" cy="155" r="12" fill="#fde047"/>
+
+                        <!-- Balloons -->
+                        <circle cx="480" cy="80" r="20" fill="#3b82f6"/>
+                        <line x1="480" y1="100" x2="480" y2="180" stroke="#94a3b8" stroke-width="1.5"/>
+                        <circle cx="520" cy="100" r="18" fill="#10b981"/>
+                        <line x1="520" y1="118" x2="520" y2="180" stroke="#94a3b8" stroke-width="1.5"/>
+
+                        <!-- AIMAN -->
+                        ${aimanInScene}
+
+                        <!-- FOREGROUND LAYER -->
+                        <circle cx="20" cy="300" r="30" fill="#f43f5e" opacity="0.3"/>
+                    </svg>`;
+                    break;
+
+                case 'beach': // Q3: Tropical Beach Coconut Tree
+                    svgContent = `
+                    <svg viewBox="0 0 600 320" class="w-full h-full object-cover">
+                        <!-- BACKGROUND LAYER -->
+                        <linearGradient id="bSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0284c7"/><stop offset="1" stop-color="#7dd3fc"/></linearGradient>
+                        <rect width="600" height="320" fill="url(#bSky)"/>
+                        <circle cx="100" cy="70" r="35" fill="#fef08a"/>
+
+                        <!-- Ocean & Sand -->
+                        <rect x="0" y="160" width="600" height="60" fill="#0284c7"/>
+                        <path d="M0 200 Q 300 210 600 190 L 600 320 L 0 320 Z" fill="#fde047"/>
+
+                        <!-- MIDGROUND LAYER -->
+                        <!-- TALL COCONUT TREE (High depth perspective) -->
+                        <path d="M420 280 Q 400 160 450 30" fill="none" stroke="#78350f" stroke-width="18" stroke-linecap="round"/>
+                        <!-- Leaves -->
+                        <path d="M450 30 Q 380 20 340 50" fill="none" stroke="#15803d" stroke-width="8" stroke-linecap="round"/>
+                        <path d="M450 30 Q 480 0 540 20" fill="none" stroke="#15803d" stroke-width="8" stroke-linecap="round"/>
+                        <path d="M450 30 Q 490 50 520 90" fill="none" stroke="#15803d" stroke-width="8" stroke-linecap="round"/>
+                        <path d="M450 30 Q 400 60 380 100" fill="none" stroke="#15803d" stroke-width="8" stroke-linecap="round"/>
+                        <!-- Coconuts -->
+                        <circle cx="445" cy="40" r="8" fill="#451a03"/>
+                        <circle cx="455" cy="42" r="8" fill="#451a03"/>
+
+                        <!-- AIMAN -->
+                        ${aimanInScene}
+
+                        <!-- FOREGROUND LAYER -->
+                        <!-- Beach umbrella & rocks foreground -->
+                        <path d="M50 320 Q 80 270 120 320 Z" fill="#64748b"/>
+                    </svg>`;
+                    break;
+
+                case 'textileMarket': // Q4: Colorful Textile Market
+                    svgContent = `
+                    <svg viewBox="0 0 600 320" class="w-full h-full object-cover">
+                        <!-- BACKGROUND LAYER -->
+                        <rect width="600" height="320" fill="#451a03"/>
+                        <!-- Hanging Silk Fabrics -->
+                        <rect x="40" y="0" width="50" height="200" fill="#ef4444" rx="4"/>
+                        <rect x="100" y="0" width="50" height="230" fill="#3b82f6" rx="4"/>
+                        <rect x="160" y="0" width="50" height="180" fill="#eab308" rx="4"/>
+                        <rect x="380" y="0" width="60" height="220" fill="#ec4899" rx="4"/>
+                        <rect x="450" y="0" width="60" height="190" fill="#10b981" rx="4"/>
+
+                        <!-- MIDGROUND LAYER -->
+                        <rect x="0" y="210" width="600" height="110" fill="#78350f"/>
+                        <!-- Fabric rolls table -->
+                        <rect x="340" y="190" width="180" height="30" fill="#b45309" rx="4"/>
+                        <ellipse cx="370" cy="185" rx="20" ry="8" fill="#a855f7"/>
+                        <ellipse cx="420" cy="185" rx="20" ry="8" fill="#06b6d4"/>
+
+                        <!-- AIMAN Touching silk -->
+                        ${aimanInScene}
+
+                        <!-- FOREGROUND LAYER -->
+                        <!-- Fabric roll near camera -->
+                        <rect x="-10" y="250" width="120" height="40" rx="10" fill="#f43f5e" transform="rotate(-10)"/>
+                    </svg>`;
+                    break;
+
+                case 'rainyRoad': // Q5: Road After Rain (Reflections & Rainbow)
+                    svgContent = `
+                    <svg viewBox="0 0 600 320" class="w-full h-full object-cover">
+                        <!-- BACKGROUND LAYER -->
+                        <linearGradient id="rSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#475569"/><stop offset="1" stop-color="#94a3b8"/></linearGradient>
+                        <rect width="600" height="320" fill="url(#rSky)"/>
+
+                        <!-- Rainbow -->
+                        <path d="M 100 220 A 200 200 0 0 1 500 220" fill="none" stroke="#ef4444" stroke-width="4" opacity="0.6"/>
+                        <path d="M 105 220 A 195 195 0 0 1 495 220" fill="none" stroke="#f59e0b" stroke-width="4" opacity="0.6"/>
+                        <path d="M 110 220 A 190 190 0 0 1 490 220" fill="none" stroke="#10b981" stroke-width="4" opacity="0.6"/>
+                        <path d="M 115 220 A 185 185 0 0 1 485 220" fill="none" stroke="#3b82f6" stroke-width="4" opacity="0.6"/>
+
+                        <!-- MIDGROUND LAYER -->
+                        <rect x="0" y="180" width="600" height="140" fill="#334155"/> <!-- Wet asphalt road -->
+                        <!-- Road Line -->
+                        <line x1="0" y1="250" x2="600" y2="250" stroke="#fef08a" stroke-width="6" stroke-dasharray="30 20"/>
+                        <!-- Water Puddles with light reflections -->
+                        <ellipse cx="150" cy="230" rx="60" ry="12" fill="#cbd5e1" opacity="0.6"/>
+                        <ellipse cx="420" cy="270" rx="80" ry="16" fill="#cbd5e1" opacity="0.7"/>
+
+                        <!-- AIMAN -->
+                        ${aimanInScene}
+
+                        <!-- FOREGROUND LAYER -->
+                        <!-- Wet umbrella foreground -->
+                        <path d="M 500 320 Q 540 250 580 320 Z" fill="#0284c7"/>
+                    </svg>`;
+                    break;
+
+                case 'schoolBus': // Q6: School & Yellow Bus Chase
+                    svgContent = `
+                    <svg viewBox="0 0 600 320" class="w-full h-full object-cover">
+                        <!-- BACKGROUND LAYER -->
+                        <rect width="600" height="320" fill="#bae6fd"/>
+                        <!-- School Building -->
+                        <rect x="40" y="80" width="220" height="120" fill="#f87171" rx="4"/>
+                        <polygon points="20,80 150,20 280,80" fill="#991b1b"/>
+                        <rect x="120" y="140" width="40" height="60" fill="#451a03"/> <!-- Gate -->
+
+                        <!-- MIDGROUND LAYER -->
+                        <rect x="0" y="200" width="600" height="120" fill="#64748b"/>
+                        <!-- Yellow School Bus -->
+                        <rect x="320" y="130" width="220" height="100" rx="16" fill="#facc15"/>
+                        <rect x="340" y="150" width="40" height="30" fill="#38bdf8" rx="4"/>
+                        <rect x="395" y="150" width="40" height="30" fill="#38bdf8" rx="4"/>
+                        <rect x="450" y="150" width="40" height="30" fill="#38bdf8" rx="4"/>
+                        <!-- Wheels -->
+                        <circle cx="370" cy="230" r="20" fill="#18181b"/>
+                        <circle cx="490" cy="230" r="20" fill="#18181b"/>
+                        <!-- Motion lines -->
+                        <line x1="550" y1="160" x2="580" y2="160" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+                        <line x1="550" y1="180" x2="590" y2="180" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+
+                        <!-- AIMAN -->
+                        ${aimanInScene}
+
+                        <!-- FOREGROUND LAYER -->
+                        <rect x="0" y="300" width="600" height="20" fill="#15803d"/>
+                    </svg>`;
+                    break;
+
+                case 'roseGarden': // Q7: Fantasy Rose Garden
+                    svgContent = `
+                    <svg viewBox="0 0 600 320" class="w-full h-full object-cover">
+                        <!-- BACKGROUND LAYER -->
+                        <linearGradient id="gSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbcfe8"/><stop offset="1" stop-color="#f43f5e"/></linearGradient>
+                        <rect width="600" height="320" fill="url(#gSky)"/>
+
+                        <!-- MIDGROUND LAYER -->
+                        <path d="M0 180 Q 300 200 600 180 L 600 320 L 0 320 Z" fill="#166534"/>
+                        <!-- Stone path -->
+                        <path d="M250 320 L 300 180 L 350 180 L 320 320 Z" fill="#94a3b8"/>
+
+                        <!-- Rose Bushes -->
+                        <circle cx="100" cy="210" r="35" fill="#15803d"/>
+                        <circle cx="90" cy="200" r="10" fill="#ef4444"/>
+                        <circle cx="115" cy="215" r="12" fill="#f43f5e"/>
+
+                        <circle cx="480" cy="210" r="40" fill="#15803d"/>
+                        <circle cx="470" cy="195" r="12" fill="#ef4444"/>
+                        <circle cx="500" cy="215" r="14" fill="#fff"/>
+
+                        <!-- Butterflies -->
+                        <path d="M 200 100 Q 210 90 220 100 Q 210 110 200 100 Z" fill="#fde047"/>
+                        <path d="M 400 80 Q 410 70 420 80 Q 410 90 400 80 Z" fill="#a855f7"/>
+
+                        <!-- AIMAN -->
+                        ${aimanInScene}
+
+                        <!-- FOREGROUND LAYER -->
+                        <!-- Big Rose in foreground -->
+                        <circle cx="50" cy="300" r="30" fill="#dc2626"/>
+                        <circle cx="50" cy="300" r="18" fill="#f87171"/>
+                    </svg>`;
+                    break;
+
+                case 'runningPark': // Q8: Jogging Park Fatigue
+                    svgContent = `
+                    <svg viewBox="0 0 600 320" class="w-full h-full object-cover">
+                        <!-- BACKGROUND LAYER -->
+                        <rect width="600" height="320" fill="#fef08a"/>
+                        <!-- Trees -->
+                        <circle cx="100" cy="120" r="50" fill="#22c55e"/>
+                        <circle cx="500" cy="120" r="60" fill="#15803d"/>
+
+                        <!-- MIDGROUND LAYER -->
+                        <rect x="0" y="180" width="600" height="140" fill="#86efac"/>
+                        <!-- Jogging track -->
+                        <path d="M0 220 Q 300 240 600 220 L 600 290 Q 300 310 0 290 Z" fill="#f97316"/>
+
+                        <!-- Park Bench with Water Bottle -->
+                        <rect x="420" y="210" width="100" height="10" fill="#78350f"/>
+                        <rect x="430" y="220" width="8" height="30" fill="#451a03"/>
+                        <rect x="500" y="220" width="8" height="30" fill="#451a03"/>
+                        <!-- Water Bottle -->
+                        <rect x="440" y="185" width="12" height="25" rx="3" fill="#06b6d4"/>
+
+                        <!-- AIMAN -->
+                        ${aimanInScene}
+
+                        <!-- FOREGROUND LAYER -->
+                        <path d="M-20 320 Q 40 260 100 320 Z" fill="#15803d"/>
+                    </svg>`;
+                    break;
+
+                case 'warehouse': // Q9: Adventurer Warehouse & Heavy Box
+                    svgContent = `
+                    <svg viewBox="0 0 600 320" class="w-full h-full object-cover">
+                        <!-- BACKGROUND LAYER -->
+                        <rect width="600" height="320" fill="#1e293b"/>
+                        <!-- Shelves with crates -->
+                        <rect x="40" y="40" width="160" height="180" fill="#475569" stroke="#334155" stroke-width="4"/>
+                        <line x1="40" y1="100" x2="200" y2="100" stroke="#334155" stroke-width="4"/>
+                        <line x1="40" y1="160" x2="200" y2="160" stroke="#334155" stroke-width="4"/>
+
+                        <!-- MIDGROUND LAYER -->
+                        <rect x="0" y="220" width="600" height="100" fill="#334155"/>
+                        <!-- Giant Wooden Crate (Heavy) -->
+                        <rect x="360" y="140" width="130" height="120" rx="6" fill="#78350f" stroke="#451a03" stroke-width="4"/>
+                        <line x1="360" y1="140" x2="490" y2="260" stroke="#451a03" stroke-width="3"/>
+                        <line x1="490" y1="140" x2="360" y2="260" stroke="#451a03" stroke-width="3"/>
+
+                        <!-- AIMAN -->
+                        ${aimanInScene}
+
+                        <!-- FOREGROUND LAYER -->
+                        <rect x="520" y="240" width="70" height="60" fill="#9a3412" rx="4"/>
+                    </svg>`;
+                    break;
+
+                case 'mountainPeak': // Q10: Mountain Peak Final Sunrise
+                    svgContent = `
+                    <svg viewBox="0 0 600 320" class="w-full h-full object-cover">
+                        <!-- BACKGROUND LAYER -->
+                        <linearGradient id="pSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fde047"/><stop offset="40" stop-color="#fb923c"/><stop offset="100" stop-color="#6b21a8"/></linearGradient>
+                        <rect width="600" height="320" fill="url(#pSky)"/>
+                        <!-- Sun -->
+                        <circle cx="300" cy="140" r="50" fill="#fef08a" opacity="0.9"/>
+
+                        <!-- Layered Mountain Ranges -->
+                        <polygon points="-50,320 150,140 350,320" fill="#581c87" opacity="0.7"/>
+                        <polygon points="250,320 450,120 650,320" fill="#3b0764" opacity="0.8"/>
+
+                        <!-- MIDGROUND LAYER -->
+                        <!-- Peak Summit Ground -->
+                        <polygon points="100,320 300,180 500,320" fill="#1e1b4b"/>
+                        <!-- Clouds below summit -->
+                        <ellipse cx="150" cy="260" rx="80" ry="25" fill="#fff" opacity="0.4"/>
+                        <ellipse cx="450" cy="270" rx="90" ry="25" fill="#fff" opacity="0.4"/>
+
+                        <!-- AIMAN at Summit -->
+                        ${aimanInScene}
+
+                        <!-- FOREGROUND LAYER -->
+                        <!-- Glowing Crown Jewel at Peak -->
+                        <polygon points="300,160 310,140 320,160 310,180" fill="#f59e0b" class="animate-glow"/>
+                    </svg>`;
+                    break;
+            }
+
+            container.innerHTML = svgContent;
+        }
+
+        function checkAnswer(selectedOpt) {
+            const q = questionsData[currentState.currentLocIndex];
+            const btnA = document.getElementById('btnOptA');
+            const btnB = document.getElementById('btnOptB');
+
+            // Lock buttons
+            btnA.disabled = true;
+            btnB.disabled = true;
+
+            const isCorrect = (selectedOpt === q.correctOpt);
+
+            // Record history for review
+            currentState.answersHistory.push({
+                question: q.question,
+                selected: selectedOpt === 'A' ? q.optA : q.optB,
+                correct: q.correctOpt === 'A' ? q.optA : q.optB,
+                isCorrect: isCorrect,
+                type: q.adjectiveType
+            });
+
+            if (isCorrect) {
+                playSound('correct');
+                currentState.score += 100 + (currentState.streak * 20);
+                currentState.gems += 1;
+                currentState.streak += 1;
+
+                // Visual styling for correct choice
+                if (selectedOpt === 'A') {
+                    btnA.className = "bg-emerald-600 text-white p-4 rounded-2xl font-black text-lg sm:text-xl flex items-center justify-between border-4 border-emerald-300 shadow-lg";
+                } else {
+                    btnB.className = "bg-emerald-600 text-white p-4 rounded-2xl font-black text-lg sm:text-xl flex items-center justify-between border-4 border-emerald-300 shadow-lg";
+                }
+
+                document.getElementById('aimanDialogue').innerText = `"${q.aimanCorrect}"`;
+                triggerConfetti();
+
+            } else {
+                playSound('wrong');
+                currentState.lives -= 1;
+                currentState.streak = 0;
+
+                // Visual styling for wrong choice
+                if (selectedOpt === 'A') {
+                    btnA.className = "bg-rose-900 text-slate-300 p-4 rounded-2xl font-black text-lg sm:text-xl flex items-center justify-between opacity-70";
+                    btnB.className = "bg-emerald-600 text-white p-4 rounded-2xl font-black text-lg sm:text-xl flex items-center justify-between border-4 border-emerald-300";
+                } else {
+                    btnB.className = "bg-rose-900 text-slate-300 p-4 rounded-2xl font-black text-lg sm:text-xl flex items-center justify-between opacity-70";
+                    btnA.className = "bg-emerald-600 text-white p-4 rounded-2xl font-black text-lg sm:text-xl flex items-center justify-between border-4 border-emerald-300";
+                }
+
+                document.getElementById('aimanDialogue').innerText = `"${q.aimanWrong}"`;
+            }
+
+            // Update stats HUD
+            document.getElementById('scoreCount').innerText = currentState.score;
+            document.getElementById('gemsCount').innerText = currentState.gems;
+            renderLives();
+
+            // Show next button
+            const btnNext = document.getElementById('btnNext');
+            btnNext.classList.remove('hidden');
+            btnNext.classList.add('flex');
+        }
+
+        function nextQuestion() {
+            playSound('click');
+
+            // Check game over by zero lives
+            if (currentState.lives <= 0) {
+                showSummaryScreen();
+                return;
+            }
+
+            currentState.currentLocIndex += 1;
+
+            if (currentState.currentLocIndex < questionsData.length) {
+                showMapScreen();
+            } else {
+                // Completed all 10 questions!
+                playSound('fanfare');
+                showSummaryScreen();
+            }
+        }
+
+        function renderSummaryData() {
+            document.getElementById('finalScore').innerText = currentState.score;
+            
+            const correctCount = currentState.answersHistory.filter(a => a.isCorrect).length;
+            document.getElementById('finalCorrect').innerText = `${correctCount}/10`;
+            document.getElementById('finalGems').innerText = `${currentState.gems}💎`;
+
+            let badge = "Pengembara Muda";
+            if (correctCount === 10) badge = "🏆 Bintang Tatabahasa";
+            else if (correctCount >= 7) badge = "⭐ Perwira Adjektif";
+            else if (correctCount >= 5) badge = "🧭 Pengembara Gigih";
+
+            document.getElementById('finalBadge').innerText = badge;
+
+            if (correctCount >= 7) {
+                triggerConfetti();
+            }
+        }
+
+        function renderReviewData() {
+            const listContainer = document.getElementById('reviewList');
+            let html = '';
+
+            questionsData.forEach((q, idx) => {
+                const userAns = currentState.answersHistory[idx];
+                const isCorrect = userAns ? userAns.isCorrect : false;
+
+                html += `
+                    <div class="bg-slate-800/90 border ${isCorrect ? 'border-emerald-500/50' : 'border-rose-500/50'} p-3.5 rounded-2xl text-left">
+                        <div class="flex items-center justify-between mb-1">
+                            <span class="text-xs font-bold ${isCorrect ? 'text-emerald-400' : 'text-rose-400'} uppercase">
+                                Soalan ${idx + 1} (${q.adjectiveType})
+                            </span>
+                            <span class="text-xs font-bold ${isCorrect ? 'bg-emerald-500/20 text-emerald-300' : 'bg-rose-500/20 text-rose-300'} px-2 py-0.5 rounded-full">
+                                ${isCorrect ? '✓ Betul' : '✗ Salah'}
+                            </span>
+                        </div>
+                        <p class="text-sm font-extrabold text-white mb-2">"${q.question}"</p>
+                        <div class="text-xs space-y-1 text-slate-300">
+                            <div>Jawapan Anda: <strong class="${isCorrect ? 'text-emerald-300' : 'text-rose-300'}">${userAns ? userAns.selected : 'Tiada'}</strong></div>
+                            <div>Jawapan Tepat: <strong class="text-emerald-400">${q.correctOpt === 'A' ? q.optA : q.optB}</strong></div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            listContainer.innerHTML = html;
+        }
+
+        function triggerConfetti() {
+            const canvas = document.getElementById('confettiCanvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const particles = [];
+            const colors = ['#f59e0b', '#ef4444', '#3b82f6', '#10b981', '#ec4899', '#fde047'];
+
+            for (let i = 0; i < 80; i++) {
+                particles.push({
+                    x: canvas.width / 2,
+                    y: canvas.height / 2,
+                    vx: (Math.random() - 0.5) * 12,
+                    vy: (Math.random() - 0.7) * 12,
+                    size: Math.random() * 8 + 4,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    life: 100
+                });
+            }
+
+            function animateConfetti() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                let alive = false;
+
+                particles.forEach(p => {
+                    if (p.life > 0) {
+                        alive = true;
+                        p.x += p.vx;
+                        p.y += p.vy;
+                        p.vy += 0.2; // gravity
+                        p.life -= 1.5;
+
+                        ctx.fillStyle = p.color;
+                        ctx.beginPath();
+                        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                });
+
+                if (alive) {
+                    requestAnimationFrame(animateConfetti);
+                } else {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                }
+            }
+
+            animateConfetti();
+        }
+
+        window.onload = function() {
+            showWelcomeScreen();
+        };
+    </script>
+</body>
+</html>
